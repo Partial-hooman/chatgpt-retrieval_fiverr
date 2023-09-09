@@ -1,6 +1,6 @@
 import os
 import sys
-
+import streamlit as st
 import openai
 from langchain.chains import ConversationalRetrievalChain, RetrievalQA
 from langchain.chat_models import ChatOpenAI
@@ -58,7 +58,7 @@ for message in st.session_state.messages:
     with st.chat_message(message[0]):
         st.markdown(message[1])
 
-if prompt := st.chat_input("What is up?"):
+if prompt := st.chat_input("enter your query:"):
     #st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
@@ -66,8 +66,8 @@ if prompt := st.chat_input("What is up?"):
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         #full_response = ""
-        result = chain({"question": prompt, "chat_history": chat_history})
+        result = chain({"question": prompt, "chat_history": st.session_state.messages})
             
         
         message_placeholder.markdown(result['answer'])
-    st.session_state.messages.append((prompt,))
+    st.session_state.messages.append((prompt,result['answer']))
