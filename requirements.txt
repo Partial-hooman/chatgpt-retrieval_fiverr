@@ -3,3 +3,4 @@ openai
 langchain
 streamlit-chat
 unstructured
+unstructured[pdf]
