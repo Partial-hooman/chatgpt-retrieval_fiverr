@@ -39,14 +39,35 @@ chain = ConversationalRetrievalChain.from_llm(
   retriever=index.vectorstore.as_retriever(search_kwargs={"k": 1}),
 )
 
-chat_history = []
-while True:
-  if not query:
-    query = input("Prompt: ")
-  if query in ['quit', 'q', 'exit']:
-    sys.exit()
-  result = chain({"question": query, "chat_history": chat_history})
-  print(result['answer'])
+#chat_history = []
+#while True:
+#  if not query:
+#    query = input("Prompt: ")
+#  if query in ['quit', 'q', 'exit']:
+#    sys.exit()
+#  result = chain({"question": query, "chat_history": chat_history})
+#  print(result['answer'])
 
-  chat_history.append((query, result['answer']))
-  query = None
+#  chat_history.append((query, result['answer']))
+#  query = None
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+for message in st.session_state.messages:
+    with st.chat_message(message[0]):
+        st.markdown(message[1])
+
+if prompt := st.chat_input("What is up?"):
+    #st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+        #full_response = ""
+        result = chain({"question": prompt, "chat_history": chat_history})
+            
+        
+        message_placeholder.markdown(result['answer'])
+    st.session_state.messages.append((prompt,))
