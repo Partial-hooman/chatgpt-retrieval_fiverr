@@ -1,3 +1,5 @@
+__import__('pysqlite3')
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import os
 import sys
 import streamlit as st
@@ -10,7 +12,7 @@ from langchain.indexes import VectorstoreIndexCreator
 from langchain.indexes.vectorstore import VectorStoreIndexWrapper
 from langchain.llms import OpenAI
 from langchain.vectorstores import Chroma
-
+import sqlite3
 import constants
 
 os.environ["OPENAI_API_KEY"] = constants.APIKEY
