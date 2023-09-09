@@ -1,7 +1,9 @@
+import sys
+import sqlite3
 __import__('pysqlite3')
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import os
-import sys
+#import sys
 import streamlit as st
 import openai
 from langchain.chains import ConversationalRetrievalChain, RetrievalQA
