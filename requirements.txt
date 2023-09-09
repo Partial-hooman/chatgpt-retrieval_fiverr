@@ -4,3 +4,5 @@ langchain
 streamlit-chat
 unstructured
 unstructured[pdf]
+chromadb 
+tiktoken
